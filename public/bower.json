@@ -1,0 +1,25 @@
+{
+  "name": "WEB APP",
+  "version": "0.0.0",
+  "authors": [
+    "SOMEONE COOL"
+  ],
+  "main": "js/main.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Gruntfile.js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "master",
+    "jasmine": "master",
+    "jquery": "master",
+    "less": "master",
+    "requirejs": "master",
+    "underscore": "master"
+  }
+}

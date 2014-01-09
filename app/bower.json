@@ -1,0 +1,24 @@
+{
+  "name": "Server",
+  "version": "0.0.0",
+  "authors": [
+    "SOMEONE COOL"
+  ],
+  "main": "js/main.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "Gruntfile.js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "master",
+    "backbone": "master",
+    "underscore": "master",
+    "handlebars": "master",
+    "requirejs": "master"
+  }
+}

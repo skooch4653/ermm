@@ -1,0 +1,24 @@
+{
+  "name": "jquery",
+  "description": "jQuery component",
+  "keywords": [
+    "jquery",
+    "component"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.json"
+  ],
+  "main": "jquery.js",
+  "license": "MIT",
+  "homepage": "https://github.com/components/jquery",
+  "_release": "eb3580559f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "eb3580559f01546764e92fc50304138250d688a3"
+  },
+  "_source": "git://github.com/components/jquery.git",
+  "_target": "master",
+  "_originalSource": "jquery"
+}
