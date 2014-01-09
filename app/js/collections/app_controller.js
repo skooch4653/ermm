@@ -16,13 +16,14 @@ define([
         PORTNUMBER = 3000;
 
       http.createServer(app).listen(PORTNUMBER, function(){
-        console.log('Server is listening on port 3000');
+        console.log('Server is listening on port 3000.');
         configureServer(app, PORTNUMBER);
       });
     }
 
     // configure the server
     function configureServer(app, port){
+      //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
       app.use(express.static(path.join(path.dirname(module.uri), 'public')));
 
       // routes, to be decoupled...
@@ -34,7 +35,7 @@ define([
         response.send('Hey!');
       });
 
-      // explain!!
+      // explain yourself!!
       explainConfiguration(port);
     }
 
