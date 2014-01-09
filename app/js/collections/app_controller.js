@@ -2,26 +2,39 @@
 
 define([
     'http',
-    'https',
+    'path',
+    'module',
     'express',
     '../routes/router'
-    ], function(http, https, express, Router){
+    ], function(http, path, module, express, Router){
 
   var ApplicationController = function(){
 
     // initialize the server
     function initialize(){
-      var server = express(),
+      var app = express(),
         PORTNUMBER = 3000;
-      server.listen(PORTNUMBER);
-      configureServer(server, PORTNUMBER);
+
+      http.createServer(app).listen(PORTNUMBER, function(){
+        console.log('Server is listening on port 3000');
+        configureServer(app, PORTNUMBER);
+      });
     }
 
     // configure the server
-    function configureServer(server, port){
-      server.get('/', function(request, response){
-        response.send('Hello there!')
+    function configureServer(app, port){
+      app.use(express.static(path.join(path.dirname(module.uri), 'public')));
+
+      // routes, to be decoupled...
+      app.get('../../public/main.html', function(request, response){
+        response.send('Welcome to the app home page!');
       });
+
+      app.get('/', function(){
+        response.send('Hey!');
+      });
+
+      // explain!!
       explainConfiguration(port);
     }
 
