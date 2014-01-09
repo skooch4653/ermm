@@ -12,26 +12,26 @@ define([
 
     // initialize the server
     function initialize(){
-      var app = express(),
+      var server = express(),
         PORTNUMBER = 3000;
 
-      http.createServer(app).listen(PORTNUMBER, function(){
+      http.createServer(server).listen(PORTNUMBER, function(){
         console.log('Server is listening on port 3000.');
-        configureServer(app, PORTNUMBER);
+        configureServer(server, PORTNUMBER);
       });
     }
 
     // configure the server
-    function configureServer(app, port){
+    function configureServer(server, port){
       //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
-      app.use(express.static(path.join(path.dirname(module.uri), 'public')));
+      server.use(express.static(path.join(path.dirname(module.uri), 'public')));
 
       // routes, to be decoupled...
-      app.get('../../public/main.html', function(request, response){
+      server.get('../../public/main.html', function(request, response){
         response.send('Welcome to the app home page!');
       });
 
-      app.get('/', function(){
+      server.get('/', function(){
         response.send('Hey!');
       });
 
