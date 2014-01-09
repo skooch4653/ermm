@@ -3,7 +3,6 @@
 define([], function(){
 
   var Router = function(){
-
     var routes = {
       home: '/'
     }

@@ -1,28 +1,35 @@
 /* @ author: Steve Young */
 
-define(['express', '../router/router'], function(express, Router){
+define([
+    'http',
+    'https',
+    'express',
+    '../routes/router'
+    ], function(http, https, express, Router){
 
   var ApplicationController = function(){
 
     // initialize the server
     function initialize(){
-      configureServer(3000);
+      var server = express(),
+        PORTNUMBER = 3000;
+      server.listen(PORTNUMBER);
+      configureServer(server, PORTNUMBER);
     }
 
     // configure the server
-    function configureServer(PORT){
-      var server = express();
+    function configureServer(server, port){
       server.get('/', function(request, response){
         response.send('Hello there!')
-      }).listen(PORT);
-      explainConfiguration(PORT);
+      });
+      explainConfiguration(port);
     }
 
     // explain how the server was configured
-    function explainConfiguration(PORT){
+    function explainConfiguration(port){
       console.log('---------------------------------------');
       console.log('Server has been configured and is now running at http://127.0.0.1:'
-        + String(PORT)+'/');
+        + String(port)+'/');
       console.log('---------------------------------------');
       return this; // more chaining...
     }
