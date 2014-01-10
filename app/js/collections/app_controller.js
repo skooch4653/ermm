@@ -1,17 +1,19 @@
 /* @ author: Steve Young */
 
 define([
-    'http',
-    'path',
-    'module',
-    'express',
-    '../routes/router'
-    ], function(http, path, module, express, Router){
+  'http',
+  'path',
+  'module',
+  'express',
+  '../routes/router',
+  '../models/system'
+  ], function(http, path, module, express, Router, System){
 
   var ApplicationController = function(){
+    var app = ApplicationController;
 
     // initialize the server
-    function initialize(){
+    var initialize = function(){
       var server = express(),
         port = 3000;
 
@@ -21,15 +23,17 @@ define([
           memoryUsage: true
         });
       });
-    }
+    };
 
-    // configure the server
+    // configure the serverk
     var configureServer = function(server, port, settings){
       var router = new Router();
+      var sys = new System();
 
       //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
       server.use(express.static(path.join(path.dirname(module.uri), 'public')));
       router.enableRoutes(server);
+      sys.run();
 
       if (settings) {
         for (parameter in settings) {
@@ -50,7 +54,7 @@ define([
       }
 
       explainConfiguration(port, settings)
-    }
+    };
 
     // explain how the server was configured
     var explainConfiguration = function(port, settings){
@@ -70,10 +74,13 @@ define([
           var setting = settings[parameter];
           switch (parameter) {
             case 'standardIO':
-              console.log('stdio streams enabled : ' + settings.standardIO);
+              console.log('stdio streams enabled: '
+                + settings.standardIO);
               break;
             case 'memoryUsage':
-              console.log('memory usage: ' + JSON.stringify(process.memoryUsage()));
+              console.log('memory usage: '
+                + JSON.stringify(process.memoryUsage(), null
+                  , 4).replace(/\"|\,|\{|\}/g,''));
               break;
             default:
               console.error('Settings hash fall-through detected!');
@@ -84,7 +91,7 @@ define([
       }
       console.log('---------------------------------------*');
       return this; // more chaining...
-    }
+    };
 
     // enable Standard IO stream for typing in console after server boot
     var enableStandardInput = function(enabled){
@@ -94,16 +101,21 @@ define([
           process.stdout.write('data: ' + chunk);
         });
       }
-    }
+    };
 
+    // enable Memory Usage printout
     var enableMemoryUsage = function(enabled){
       if (enabled) process.memoryUsage()
-    }
+    };
 
+    // return an object of psueod-public data fields
     return {
       init: initialize
     }
-  }
+  };
 
   return ApplicationController;
 });
+
+
+
