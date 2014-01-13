@@ -3,14 +3,16 @@
 define([
   'http',
   'path',
+  'fs',
   'module',
   'express',
   '../routes/router',
   '../models/system'
-  ], function(http, path, module, express, Router, System){
+  ], function(http, path, fs, module, express, Router, System){
 
   var ApplicationController = function(){
-    var app = ApplicationController;
+    var app = ApplicationController,
+      _base = '/public';
 
     // initialize the server
     var initialize = function(){
@@ -18,21 +20,23 @@ define([
         port = 3000;
 
       http.createServer(server).listen(port, function(){
-        configureServer(server, port, {
-          standardIO: true,
+        configureServer(server, _base, port, {
+          standardIO: false,
           memoryUsage: true
+        }, function(){
+          /* optional callback */
         });
       });
     };
 
     // configure the serverk
-    var configureServer = function(server, port, settings){
+    var configureServer = function(server, _base, port, settings, callback){
       var router = new Router();
       var sys = new System();
 
       //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
       server.use(express.static(path.join(path.dirname(module.uri), 'public')));
-      router.enableRoutes(server);
+      router.enableRoutes(server, _base);
       sys.run();
 
       if (settings) {
@@ -53,7 +57,8 @@ define([
         }
       }
 
-      explainConfiguration(port, settings)
+      explainConfiguration(port, settings);
+      callback();
     };
 
     // explain how the server was configured
@@ -80,7 +85,7 @@ define([
             case 'memoryUsage':
               console.log('memory usage: '
                 + JSON.stringify(process.memoryUsage(), null
-                  , 4).replace(/\"|\,|\{|\}/g,''));
+                  , 4).replace(/[",{}\n]/g,'')); // (/\"|\,|\{|\}|\n/g,''));
               break;
             default:
               console.error('Settings hash fall-through detected!');

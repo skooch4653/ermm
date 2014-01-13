@@ -6,17 +6,7 @@ define(['child_process'], function(childProcess){
   var SYSTEM = function(){
 
     var run = function(){
-      var spawn = childProcess.spawn;
-      var pwd = spawn('pwd');
-
-      pwd.stdout.on('data', function(data){
-        console.log('pwd: ' + data);
-      });
-
-      // pwd.stderr.on('data', function(data){});
-
-      // pwd.on('exit', function(data){});
-
+      //console.log('OK');
     };
 
     return {
