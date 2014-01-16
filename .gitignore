@@ -4,3 +4,4 @@
 .DS_store
 app/public/demo.js
 app/public/css/fonts
+app/public/css/fonts/*
