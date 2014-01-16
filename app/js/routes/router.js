@@ -1,25 +1,24 @@
 /* @ author: Steve Young */
 
-define([], function(){
+define(['express'], function(express){
 
   var Router = function(){
 
     var enableRoutes = function(server, _base) {
-      console.log(_base + ' has been passed.');
-
-      server.get('../../public/main.html', function(request, response){
-        response.send('Welcome to the app home page!');
-      });
-
-      server.get('/', function(){
-        response.send('Hey!');
-      });
-
+      // home
       server.get('/', function(request, response){
-        var pathname = _base + request.url;
-        console.log('base: ' + _base);
-        console.log('pathname' + pathname);
+        server.use(express.static(_base));
+        talkAbout(request, response)
       });
+
+
+
+    };
+
+    var talkAbout = function(request, response){
+      console.log('request url: ' + request.url);
+      console.log('vanilla request' + JSON.stringify(request));
+      console.log('vanilla response' + JSON.stringify(response));
     };
 
     return {

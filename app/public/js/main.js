@@ -6,22 +6,9 @@ require.config({
     "jasmine": ["vendor/jasmine/lib/jasmine-core/jasmine"],
     "jquery": ["vendor/jquery/jquery.min"],
     "less": ["vendor/less/dist/less-1.6.0.min"],
-    "underscore": ["vendor/underscore/underscore-min"],
-
-    /*////////////////////
-          MODELS
-    ////////////////////*/
-    config : "models/config/config"
-
-    /*////////////////////
-           VIEWS
-    ////////////////////*/
-
+    "underscore": ["vendor/underscore/underscore-min"]
   },
   shim : {
-    'main' : {
-      deps : ['config']
-    },
     'backbone' : {
       deps: ['jquery', 'underscore'],
       exports : 'Backbone'
@@ -33,8 +20,9 @@ require.config({
 });
 
 
-require([], function() {
-  var DEFAULT_SCAFFOLD = function() {
-    console.log('Hey!');
+require(['less'], function(less) {
+  var ERMM = function() {
+    less.watch()
+    console.log('Welcome to ERMM!');
   }();
 });

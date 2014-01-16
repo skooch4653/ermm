@@ -11,44 +11,45 @@ define([
   ], function(http, path, fs, module, express, Router, System){
 
   var ApplicationController = function(){
-    var app = ApplicationController,
-      _base = '/public';
+    var _base = './public'; // defaulted
 
     // initialize the server
-    var initialize = function(){
+    var initialize = function(uri){
       var server = express(),
-        port = 3000;
+        port = 8124;
 
       http.createServer(server).listen(port, function(){
         configureServer(server, _base, port, {
+          mode: 'development',
           standardIO: false,
           memoryUsage: true
-        }, function(){
-          /* optional callback */
         });
       });
     };
 
-    // configure the serverk
-    var configureServer = function(server, _base, port, settings, callback){
-      var router = new Router();
+    // configure the server
+    var configureServer = function(server, _base, port, settings){
+      console.log('configuring');
+      var router = new Router(); // pass server and _base in this declaration
       var sys = new System();
-
       //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
-      server.use(express.static(path.join(path.dirname(module.uri), 'public')));
+      // var dirname = path.dirname(module.uri);
+
       router.enableRoutes(server, _base);
-      sys.run();
 
       if (settings) {
         for (parameter in settings) {
           if (typeof settings[parameter] === 'boolean') {
-            var setting = settings[parameter];
+            var value = settings[parameter];
             switch (parameter) {
               case 'standardIO':
-                enableStandardInput(setting);
+                enableStandardInput(value);
                 break;
               case 'memoryUsage':
-                enableMemoryUsage(setting);
+                enableMemoryUsage(value);
+                break;
+              case 'mode':
+                setApplicationMode(value);
                 break;
               default:
                 console.error('Settings hash fall-through detected!');
@@ -56,9 +57,7 @@ define([
           }
         }
       }
-
       explainConfiguration(port, settings);
-      callback();
     };
 
     // explain how the server was configured
@@ -87,6 +86,9 @@ define([
                 + JSON.stringify(process.memoryUsage(), null
                   , 4).replace(/[",{}\n]/g,'')); // (/\"|\,|\{|\}|\n/g,''));
               break;
+            case 'mode':
+              console.log('mode: ' + settings.mode);
+              break;
             default:
               console.error('Settings hash fall-through detected!');
           }
@@ -110,7 +112,15 @@ define([
 
     // enable Memory Usage printout
     var enableMemoryUsage = function(enabled){
-      if (enabled) process.memoryUsage()
+      if (enabled) {
+        process.memoryUsage();
+      }
+    };
+
+    var setApplicationMode = function(enabled){
+      this.configure('test', function(){
+        app.use(express.errorHandler());
+      });
     };
 
     // return an object of psueod-public data fields
