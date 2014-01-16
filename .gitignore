@@ -3,3 +3,4 @@
 *.sublime-project
 .DS_store
 app/public/demo.js
+app/public/css/fonts
