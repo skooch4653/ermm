@@ -5,3 +5,5 @@
 app/public/demo.js
 app/public/css/fonts
 app/public/css/fonts/*
+node_modules
+app_copy

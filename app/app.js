@@ -5,7 +5,7 @@ var requirejs = require('requirejs');
 requirejs([
   'path',
   'module',
-  'js/collections/app_controller'
+  './controller'
   ], function(path, module, ApplicationController){
   var CHAPTER = function(){
     var App = new ApplicationController();
