@@ -7,7 +7,7 @@ requirejs([
   'module',
   'js/collections/app_controller'
   ], function(path, module, ApplicationController){
-  var ERMM = function(){
+  var CHAPTER = function(){
     var App = new ApplicationController();
     App.init();
   }();
