@@ -1,14 +1,11 @@
 /* @ author: Steve Young */
 
-var requirejs = require('requirejs');
+var //dependencies
+  path = require('path'),
+  module = require('module'),
+  ApplicationController = require('./controller');
 
-requirejs([
-  'path',
-  'module',
-  './controller'
-  ], function(path, module, ApplicationController){
-  var CHAPTER = function(){
-    var App = new ApplicationController();
-    App.init();
-  }();
-});
+var CHAPTER = function(controller){
+  var App = ApplicationController();
+  App.init();
+}();
