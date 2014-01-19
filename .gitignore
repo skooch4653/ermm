@@ -6,3 +6,6 @@ app/public/demo.js
 app/public/css/fonts
 app/public/css/fonts/*
 node_modules
+./node_modules
+node_modules/
+node_modules/*

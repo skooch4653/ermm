@@ -2,7 +2,8 @@
 
 var //dependencies
   express = require('express'),
-  fs = require('fs');
+  fs = require('fs'),
+  path = require('path');
 
 module.exports = function(){
 
@@ -46,17 +47,19 @@ module.exports = function(){
       talkAbout(request, response);
     });
 
-    /*
+    /* very rough, manual route. needs fix */
     // handling templates calling for css
-    if(req.url.indexOf('.css') != -1){ //req.url has the pathname, check if it conatins '.css'
-      fs.readFile(__dirname + '/public/css/style.css', function (err, data) {
-        if (err) console.log(err);
-        res.writeHead(200, {'Content-Type': 'text/css'});
-        res.write(data);
-        res.end();
-      });
-    }
-    */
+    server.get('/css/*', function(request, response){
+      if(request.url.indexOf('.css') != -1){ // does the request url contain a *.css filename
+        fs.readFile(path.normalize(__dirname + '/../public/css/style.min.css'), function (err, data) {
+          if (err) console.log(err);
+          response.writeHead(200, {'Content-Type': 'text/css'});
+          response.write(data);
+          response.end();
+        });
+      }
+    });
+
   };
 
   var talkAbout = function(request, response){
@@ -68,6 +71,7 @@ module.exports = function(){
     console.log('--\t');
   };
 
+  // public methods
   return {
     enableRoutes: enableRoutes
   }

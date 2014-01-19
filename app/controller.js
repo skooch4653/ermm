@@ -7,13 +7,14 @@ var // dependencies
   Router = require('./routes/router');
 
 module.exports = function(){
-  var _base = './public'
+  var _base = '';
 
   // initialize the server
   var initialize = function(uri){
     var server = express(),
       port = 3000;
 
+    setBaseDirectory(uri);
     http.createServer(server).listen(port, function(){
       configureServer(server, _base, port, {
         mode: 'development',
@@ -25,7 +26,6 @@ module.exports = function(){
 
   // configure the server
   var configureServer = function(server, _base, port, settings){
-    console.log('configuring');
     var router = new Router();
 
     //! path.dirname(module.uri) used instead of __dirname due to requirejs known compat. ticket
@@ -127,6 +127,11 @@ module.exports = function(){
     this.configure('test', function(){
       app.use(express.errorHandler());
     });
+  };
+
+  var setBaseDirectory = function(uri){
+    _base = uri;
+    console.log('_base set to ' + _base);
   };
 
   // return an object of psueod-public data fields

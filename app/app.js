@@ -7,5 +7,5 @@ var //dependencies
 
 var CHAPTER = function(controller){
   var App = ApplicationController();
-  App.init();
+  App.init(__dirname);
 }();
