@@ -13,7 +13,8 @@
 		"mocha": "1.x",
 		"async": "~0.2",
 		"glob": "3.x",
-		"semver": "2.x"
+		"semver": "2.x",
+		"wordpos": "1.x"
 	},
 	"devDependencies": {
 		"express": "3.4.7"
