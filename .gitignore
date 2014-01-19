@@ -1,11 +1,5 @@
-*.sublime-settings
-*.sublime-workspace
-*.sublime-project
-.DS_store
-app/public/demo.js
-app/public/css/fonts
-app/public/css/fonts/*
+.DS_Store
+*.sublime*
 node_modules
-./node_modules
-node_modules/
-node_modules/*
+**/fonts
+
